@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Learn</string>
+    <string name="density">density%1$d</string>
+    <string name="Width">Width %1$s</string>
+    <string name="Height">Height %1$s</string>
+    <string name="Config">Config %1$s</string>
+    <string name="Size">Size %1$s</string>
+</resources>
