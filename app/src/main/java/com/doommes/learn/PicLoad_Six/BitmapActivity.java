@@ -1,4 +1,4 @@
-package com.doommes.learn.Item;
+package com.doommes.learn.PicLoad_Six;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

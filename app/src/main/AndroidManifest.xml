@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Item.BitmapActivity" />
-        <activity android:name=".Item.DiskLruCacheActivity" />
-        <activity android:name=".Item.PhotoActivity"></activity>
+        <activity android:name=".PicLoad_Six.BitmapActivity" />
+        <activity android:name=".PicLoad_Six.DiskLruCacheActivity" />
+        <activity android:name=".PicLoad_Six.PhotoActivity"></activity>
     </application>
 
 </manifest>

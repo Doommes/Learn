@@ -1,14 +1,12 @@
-package com.doommes.learn.Item;
+package com.doommes.learn.PicLoad_Six;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
-import com.doommes.learn.Item.adapter.PhotoAdapter;
+import com.doommes.learn.PicLoad_Six.adapter.PhotoAdapter;
 import com.doommes.learn.R;
 
 public class PhotoActivity extends AppCompatActivity {
@@ -107,18 +105,6 @@ public class PhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
         initView();
-        openLruCache();
-    }
-
-    private void openLruCache() {
-        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        int cacheSize = maxMemory / 8;
-        mLruCache = new LruCache<String, Bitmap>(cacheSize) {
-            @Override
-            protected int sizeOf(@NonNull String key, @NonNull Bitmap value) {
-                return value.getRowBytes() * value.getHeight() / 1024;
-            }
-        };
     }
 
     private void initView() {

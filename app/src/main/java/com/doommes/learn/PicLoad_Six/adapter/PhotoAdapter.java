@@ -1,10 +1,7 @@
-package com.doommes.learn.Item.adapter;
+package com.doommes.learn.PicLoad_Six.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.util.LruCache;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.doommes.learn.PicLoad_Six.ImageLoader.ImageLoader;
 import com.doommes.learn.R;
-import com.doommes.learn.Uitl;
+import com.doommes.learn.Util;
 import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.BufferedInputStream;
@@ -31,16 +29,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     private String[] imgs;
     private LruCache<String, Bitmap> mLruCache = null;
     private DiskLruCache mDiskLruCache = null;
+    private ImageLoader mImageLoader;
     private View mView;
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            ImageView view = mView.findViewWithTag(Uitl.hashKeyForDisk((String) msg.obj));
-            view.setImageBitmap(loadImage((String) msg.obj));
-        }
-    };
 
     public PhotoAdapter(Context context, String[] imageThumbUrls) {
         imgs = imageThumbUrls;
@@ -52,14 +42,15 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
             }
         };
         try {
-            File cacheDir = Uitl.getDiskCacheDir(context, "bitmap");
+            File cacheDir = Util.getDiskCacheDir(context, "bitmap");
             if (!cacheDir.exists()){
                 cacheDir.mkdirs();
             }
-            mDiskLruCache = DiskLruCache.open(cacheDir, Uitl.getAppVersion(context), 1, 10*1024*1024);
+            mDiskLruCache = DiskLruCache.open(cacheDir, Util.getAppVersion(context), 1, 10*1024*1024);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        mImageLoader = ImageLoader.build(context);
     }
 
     @NonNull
@@ -70,13 +61,10 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PhotoAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull PhotoAdapter.ViewHolder holder, int i) {
 
-        viewHolder.mImageView.setTag(Uitl.hashKeyForDisk(imgs[i]));
-        Bitmap bitmap = loadImage(imgs[i]);
-        if (bitmap != null){
-            viewHolder.mImageView.setImageBitmap(bitmap);
-        }
+        holder.mImageView.setTag(imgs[i]);
+        mImageLoader.bindBitmap(imgs[i], holder.mImageView, 100, 1000);
     }
 
 
@@ -106,7 +94,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
 
     public Bitmap getBitmapFromLruCache(String key){
-        Bitmap bitmap = mLruCache.get(Uitl.hashKeyForDisk(key));
+        Bitmap bitmap = mLruCache.get(Util.hashKeyForDisk(key));
         if (bitmap != null){
             Log.d(TAG, "getBitmapFromLruCache: LurCache");
             return bitmap;
@@ -117,9 +105,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     private Bitmap getBitmapFromDiskLruCache(String img){
         DiskLruCache.Snapshot snapshot = null;
         try {
-            snapshot = mDiskLruCache.get(Uitl.hashKeyForDisk(img));
+            snapshot = mDiskLruCache.get(Util.hashKeyForDisk(img));
             if (snapshot != null){
-                Bitmap bitmap = Uitl.loadBitmap(snapshot, 150, 150);
+                Bitmap bitmap = Util.loadBitmap(snapshot, 150, 150);
                 Log.d(TAG, "getBitmapFromDiskLruCache: DiskLruCache");
                 return bitmap;
             }else {
@@ -135,7 +123,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String key = Uitl.hashKeyForDisk(url);
+                String key = Util.hashKeyForDisk(url);
                 try {
                     DiskLruCache.Editor editor = mDiskLruCache.edit(key);
                     if (editor != null){
@@ -146,11 +134,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
                             editor.abort();
                         }
                     }
-                    DiskLruCache.Snapshot snapshot = mDiskLruCache.get(Uitl.hashKeyForDisk(url));
+                    DiskLruCache.Snapshot snapshot = mDiskLruCache.get(Util.hashKeyForDisk(url));
                     if (snapshot != null){
-                        Bitmap bitmap = Uitl.loadBitmap(snapshot, 150, 150);
+                        Bitmap bitmap = Util.loadBitmap(snapshot, 150, 150);
                         if (bitmap != null){
-                            mLruCache.put(Uitl.hashKeyForDisk(url), bitmap);
+                            mLruCache.put(Util.hashKeyForDisk(url), bitmap);
                             Log.d(TAG, "run: write to lruCache");
 //                            Message message = new Message();
 ////                            message.obj = url;

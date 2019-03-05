@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.doommes.learn.Item.BitmapActivity;
-import com.doommes.learn.Item.DiskLruCacheActivity;
-import com.doommes.learn.Item.PhotoActivity;
+import com.doommes.learn.PicLoad_Six.BitmapActivity;
+import com.doommes.learn.PicLoad_Six.DiskLruCacheActivity;
+import com.doommes.learn.PicLoad_Six.PhotoActivity;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private String[] mItems;

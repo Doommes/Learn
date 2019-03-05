@@ -12,10 +12,12 @@ import com.jakewharton.disklrucache.DiskLruCache;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Uitl {
+public class Util {
     public static int getAppVersion(Context context){
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -61,22 +63,38 @@ public class Uitl {
         return sb.toString();
     }
 
-    // 优化Bitmap加载
-    public static Bitmap loadBitmap(DiskLruCache.Snapshot snapshot, int reqWidth, int reqHeight) {
-        try {
-            FileInputStream fileInputStream = (FileInputStream) snapshot.getInputStream(0);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.RGB_565;
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFileDescriptor(fileInputStream.getFD(), null, options);
-            options.inSampleSize = Uitl.calculateInSampleSize(options, reqWidth, reqHeight);
-            options.inJustDecodeBounds = false;
-            Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream, null, options);
-            return bitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void close(Object stream){
+        if ((stream instanceof InputStream) ){
+            try {
+                ((InputStream)stream).close();
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return null;
+        if ((stream instanceof OutputStream)){
+            try {
+                ((OutputStream)stream).close();
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    // 优化Bitmap加载
+    public static Bitmap loadBitmap(DiskLruCache.Snapshot snapshot, int reqWidth, int reqHeight) throws IOException {
+        FileInputStream fileInputStream = (FileInputStream) snapshot.getInputStream(0);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFileDescriptor(fileInputStream.getFD(), null, options);
+        options.inSampleSize = Util.calculateInSampleSize(options, reqWidth, reqHeight);
+        options.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream, null, options);
+        return bitmap;
     }
     //计算采样率
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {

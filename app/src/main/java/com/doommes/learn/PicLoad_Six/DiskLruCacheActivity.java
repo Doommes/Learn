@@ -1,4 +1,4 @@
-package com.doommes.learn.Item;
+package com.doommes.learn.PicLoad_Six;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.doommes.learn.R;
-import com.doommes.learn.Uitl;
+import com.doommes.learn.Util;
 import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.BufferedInputStream;
@@ -22,7 +22,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.doommes.learn.Uitl.hashKeyForDisk;
+import static com.doommes.learn.Util.hashKeyForDisk;
 
 public class DiskLruCacheActivity extends AppCompatActivity {
     private static final String TAG = "DiskLruCacheActivity";
@@ -67,12 +67,12 @@ public class DiskLruCacheActivity extends AppCompatActivity {
     }
 
     private void OpenDiskLruCache() {
-        File cacheDir = Uitl.getDiskCacheDir(this, "bitmap");
+        File cacheDir = Util.getDiskCacheDir(this, "bitmap");
         if (!cacheDir.exists()) {
             cacheDir.mkdirs();
         }
         try {
-            mDiskLruCache = DiskLruCache.open(cacheDir, Uitl.getAppVersion(this), 1, 10 * 1024 * 1024);
+            mDiskLruCache = DiskLruCache.open(cacheDir, Util.getAppVersion(this), 1, 10 * 1024 * 1024);
         } catch (IOException e) {
             e.printStackTrace();
         }
