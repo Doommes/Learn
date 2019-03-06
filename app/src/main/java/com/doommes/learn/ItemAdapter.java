@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.doommes.learn.Handler_eight.HandlerActivity;
 import com.doommes.learn.PicLoad_Six.BitmapActivity;
 import com.doommes.learn.PicLoad_Six.DiskLruCacheActivity;
 import com.doommes.learn.PicLoad_Six.PhotoActivity;
+import com.doommes.learn.Thread_nine.ThreadActivity;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private String[] mItems;
@@ -42,8 +44,24 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                         break;
                     case 1:
                         intent = getIntent(DiskLruCacheActivity.class);
+                        break;
                     case 2:
                         intent = getIntent(PhotoActivity.class);
+                        break;
+                    case 3:
+                        intent = getIntent(HandlerActivity.class);
+                        break;
+                    case 4:
+                        intent = getIntent(ThreadActivity.class);
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
                     default:
                         break;
                 }

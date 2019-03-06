@@ -21,7 +21,9 @@
         </activity>
         <activity android:name=".PicLoad_Six.BitmapActivity" />
         <activity android:name=".PicLoad_Six.DiskLruCacheActivity" />
-        <activity android:name=".PicLoad_Six.PhotoActivity"></activity>
+        <activity android:name=".PicLoad_Six.PhotoActivity" />
+        <activity android:name=".Handler_eight.HandlerActivity" />
+        <activity android:name=".Thread_nine.ThreadActivity"></activity>
     </application>
 
 </manifest>
