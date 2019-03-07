@@ -23,7 +23,8 @@
         <activity android:name=".PicLoad_Six.DiskLruCacheActivity" />
         <activity android:name=".PicLoad_Six.PhotoActivity" />
         <activity android:name=".Handler_eight.HandlerActivity" />
-        <activity android:name=".Thread_nine.ThreadActivity"></activity>
+        <activity android:name=".Thread_nine.ThreadActivity" />
+        <activity android:name=".ArchitectureComponents_14.LiveDataActivity"></activity>
     </application>
 
 </manifest>

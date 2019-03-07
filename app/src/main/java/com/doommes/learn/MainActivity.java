@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initView() {
-        String[] items = {"Bitmap", "DiskLruCache", "PhotoWall", "Handler", "Thread"};
+        String[] items = {"Bitmap", "DiskLruCache", "PhotoWall", "Handler", "Thread","LiveData"};
         mRvList = (RecyclerView) findViewById(R.id.rv_list);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         mRvList.setLayoutManager(manager);
