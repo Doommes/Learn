@@ -24,7 +24,9 @@
         <activity android:name=".PicLoad_Six.PhotoActivity" />
         <activity android:name=".Handler_eight.HandlerActivity" />
         <activity android:name=".Thread_nine.ThreadActivity" />
-        <activity android:name=".ArchitectureComponents_14.LiveDataActivity"></activity>
+        <activity android:name=".ArchitectureComponents_14.LiveDataActivity" />
+        <activity android:name=".Rxjava.RxActivity" />
+        <activity android:name=".View.ViewActivity"></activity>
     </application>
 
 </manifest>

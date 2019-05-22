@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.ViewActivity">
+    <com.doommes.learn.View.CircleView
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#bf9090"
+        android:layout_margin="50dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp" />
+
+    <com.doommes.learn.View.PracticeDraw4View
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/view"
+        android:background="#b9b9b9"
+        android:layout_width="match_parent"
+        android:layout_height="500dp" />
+
+    <com.doommes.learn.View.LikeView
+        android:button="@null"
+        android:id="@+id/like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</android.support.constraint.ConstraintLayout>

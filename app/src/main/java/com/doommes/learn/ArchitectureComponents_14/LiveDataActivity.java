@@ -8,6 +8,8 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.doommes.learn.R;
@@ -15,19 +17,23 @@ import com.doommes.learn.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class LiveDataActivity extends AppCompatActivity {
+public class LiveDataActivity extends AppCompatActivity implements View.OnClickListener {
     private testViewModel mViewModel;
+    private ShareDataViewModel mShareDataViewModel;
     private TextView mTset;
     private static final int ONE_SECOND = 1000;
 
+    private int mCount = 0;
     private long mInitialTime;
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            //mTset.setText(String.valueOf());
+            mTset.setText(String.valueOf(msg.obj));
         }
     };
+    private Button mClick;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +42,21 @@ public class LiveDataActivity extends AppCompatActivity {
 
         mViewModel = ViewModelProviders.of(this).get(testViewModel.class);
 
+        mShareDataViewModel = ViewModelProviders.of(this).get(ShareDataViewModel.class);
+        ShareObserver();
         //sub();
-
         //subTo();
+    }
+
+    private void ShareObserver() {
+        Observer<Integer> observer = new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                mClick.setText(String.valueOf(integer));
+                mCount = integer;
+            }
+        };
+        mShareDataViewModel.getMutableLiveData().observe(this, observer);
     }
 
     private void subTo() {
@@ -49,7 +67,9 @@ public class LiveDataActivity extends AppCompatActivity {
             @Override
             public void run() {
                 final long newValue = (SystemClock.elapsedRealtime() - mInitialTime) / 1000;
-                mTset.setText(String.valueOf(newValue));
+                Message message = new Message();
+                message.obj = newValue;
+                mHandler.sendMessage(message);
             }
         }, ONE_SECOND, ONE_SECOND);
     }
@@ -66,5 +86,18 @@ public class LiveDataActivity extends AppCompatActivity {
 
     private void initView() {
         mTset = (TextView) findViewById(R.id.tset);
+        mClick = (Button) findViewById(R.id.click);
+        mClick.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            default:
+                break;
+            case R.id.click:
+                mShareDataViewModel.getMutableLiveData().postValue(++mCount);
+                break;
+        }
     }
 }

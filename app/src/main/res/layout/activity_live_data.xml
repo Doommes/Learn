@@ -9,4 +9,15 @@
         android:id="@+id/tset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        app:layout_constraintStart_toEndOf="@id/tset"
+        android:id="@+id/click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.doommes.learn.ArchitectureComponents_14.TestFrament"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>
