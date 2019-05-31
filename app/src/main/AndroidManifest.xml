@@ -26,7 +26,8 @@
         <activity android:name=".Thread_nine.ThreadActivity" />
         <activity android:name=".ArchitectureComponents_14.LiveDataActivity" />
         <activity android:name=".Rxjava.RxActivity" />
-        <activity android:name=".View.ViewActivity"></activity>
+        <activity android:name=".View.ViewActivity" />
+        <activity android:name=".ViewTouch.TouchActivity"></activity>
     </application>
 
 </manifest>

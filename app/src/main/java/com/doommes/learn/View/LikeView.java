@@ -19,7 +19,11 @@ public class LikeView extends android.support.v7.widget.AppCompatCheckBox {
     //數字翻动角度
     private int numberDegrees;
     private static final int INIT_DEGREES = 45;
+    private static final int REVERSE_FLAG = -1;
     private  int isLike = -1;
+    private  int isFirst;
+
+    private boolean isInit = true;
 
     //设置的数字
     private int number;
@@ -72,6 +76,7 @@ public class LikeView extends android.support.v7.widget.AppCompatCheckBox {
         mPaintNum.setTextAlign(Paint.Align.RIGHT);
         number = getNumber();
         numberDegrees = 0;
+        isFirst = -2;
     }
 
     @Override
@@ -128,32 +133,45 @@ public class LikeView extends android.support.v7.widget.AppCompatCheckBox {
 
     private void judgeChecked() {
         if (this.isChecked()){
-            isLike = 1;
+            isLike = -1;
             numberFlag = number;
             numberFlip = number - 1;
         }else {
-            isLike = -1;
+            isLike = 1;
             numberFlag = number + 1;
             numberFlip = number + 1;
         }
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (isFirst != 0){
+            isLike *= REVERSE_FLAG;
+            Log.d(TAG, "onTouchEvent: After"+isChecked());
+        }else {
+            isInit = false;
+            isFirst++;
+            Log.d(TAG, "onTouchEvent: First"+isChecked());
+        }
+        return super.onTouchEvent(event);
+    }
+
     private void drawNumber(Canvas canvas, Camera camera, int num, float x, float y){
-        int flag = (isChecked() ? 1 : -1);
+        int flag = isLike;
 
         float width = mPaintNum.measureText(String.valueOf(num));
-        float height = mPaintNum.getFontSpacing() * flag * -1;
-        float diff = (numberDegrees/(float)INIT_DEGREES) * height ;
+        float height = mPaintNum.getFontSpacing() * isLike;
+        float diff = (numberDegrees/(float)INIT_DEGREES) * height * REVERSE_FLAG;
+                ;
         int degrees = 45;
         int alpha = 255 - (int) (numberDegrees/(float)INIT_DEGREES * 255);
 
-        float showY = y+ diff;
-        float hideY = y + height +diff;
+        numberDegrees *= isLike;
 
         canvas.save();
-//        mPaintNum.setAlpha(alpha);
+        mPaintNum.setAlpha(alpha);
         camera.save();
-        camera.rotateX(numberDegrees * flag);
+        camera.rotateX(numberDegrees);
         canvas.translate((x+width/2), y);
         camera.applyToCanvas(canvas);
         canvas.translate(-(x+width/2), -y);
@@ -161,20 +179,20 @@ public class LikeView extends android.support.v7.widget.AppCompatCheckBox {
         canvas.drawText(String.valueOf(num), x, y + diff, mPaintNum);
         canvas.restore();
 
-
+        int degreesHide = INIT_DEGREES * isLike * REVERSE_FLAG + numberDegrees;
         canvas.save();
-//        mPaintNum.setAlpha(255 - alpha);
+        mPaintNum.setAlpha(255 - alpha);
         camera.save();
-        camera.rotateX(INIT_DEGREES - numberDegrees);
+        camera.rotateX(degreesHide);
         canvas.translate((x+width/2), y);
         camera.applyToCanvas(canvas);
         canvas.translate(-(x+width/2), -y);
         canvas.drawText(String.valueOf(numberFlip), x, y + height + diff, mPaintNum);
         camera.restore();
         canvas.restore();
-        Log.d(TAG, "drawNumber: num= " +num
-                + " flip=" + numberFlip
-                + " " + flag
-                + " " + height + " " + diff);
+        Log.d(TAG, "drawNumber: y1 = " +(y + diff)
+                + " y2 = " + (y + height + diff)
+                + " degrees1 = " + numberDegrees
+                + " degrees2 = " + (degreesHide));
     }
 }

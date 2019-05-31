@@ -17,6 +17,7 @@ import com.doommes.learn.PicLoad_Six.PhotoActivity;
 import com.doommes.learn.Rxjava.RxActivity;
 import com.doommes.learn.Thread_nine.ThreadActivity;
 import com.doommes.learn.View.ViewActivity;
+import com.doommes.learn.ViewTouch.TouchActivity;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private String[] mItems;
@@ -66,6 +67,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     intent = getIntent(ViewActivity.class);
                     break;
                 case 8:
+                    intent = getIntent(TouchActivity.class);
                     break;
                 default:
                     break;
