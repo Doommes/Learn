@@ -1,5 +1,6 @@
 package com.doommes.learn;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.doommes.learn.A5_RomteView.RemoteActivity;
 import com.doommes.learn.ArchitectureComponents_14.LiveDataActivity;
 import com.doommes.learn.Handler_eight.HandlerActivity;
 import com.doommes.learn.PicLoad_Six.BitmapActivity;
@@ -68,6 +70,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     break;
                 case 8:
                     intent = getIntent(TouchActivity.class);
+                    break;
+                case 9:
+                    intent = getIntent(RemoteActivity.class);
                     break;
                 default:
                     break;
