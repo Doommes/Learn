@@ -6,11 +6,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+
     <application
         android:name=".Init"
         android:allowBackup="true"
@@ -20,6 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <service
+            android:name=".AIDL.BookManagerServices"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote"></service>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +42,7 @@
         <activity android:name=".Rxjava.RxActivity" />
         <activity android:name=".View.ViewActivity" />
         <activity android:name=".ViewTouch.TouchActivity" />
-        <activity android:name=".A5_RomteView.RemoteActivity"></activity>
+        <activity android:name=".A5_RomteView.RemoteActivity" />
     </application>
 
 </manifest>

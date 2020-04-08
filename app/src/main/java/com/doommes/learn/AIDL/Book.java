@@ -4,15 +4,23 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Book implements Parcelable {
-    public int bookId;
-    public String  boolName;
+    private int bookId;
+    private String  boolName;
 
     public Book(int bookId, String boolName) {
         this.bookId = bookId;
         this.boolName = boolName;
     }
 
-    protected Book(Parcel in) {
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", boolName='" + boolName + '\'' +
+                '}';
+    }
+
+    private Book(Parcel in) {
         bookId = in.readInt();
         boolName = in.readString();
     }

@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.doommes.learn.permission.FloatWindowManager;
 
 import java.util.List;
 
@@ -42,10 +41,10 @@ public class Init extends Application {
             @Override
             public void onActivityStopped(Activity activity) {
                 if (!isAppForeground(getApplicationContext())){
-                    FloatWindowManager.getInstance().dismissWindow();
+//                    FloatWindowManagerer.getInstance().dismissWindow();
                     Log.d("test", "onActivityStopped: YES");
                 }else {
-                    FloatWindowManager.getInstance().dismissWindow();
+//                    FloatWindowManager.getInstance().dismissWindow();
                     Log.d("test", "onActivityStopped: " + activity);
                 }
             }

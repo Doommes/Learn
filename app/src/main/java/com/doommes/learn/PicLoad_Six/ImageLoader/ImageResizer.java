@@ -40,9 +40,11 @@ public class ImageResizer {
         int height = options.outHeight;
         int inSimpleSize = 1;
         if (width > reqWidth || height > reqHeight){
-            int widthRatio = Math.round(width/reqWidth);
-            int heightRatio = Math.round(height/reqHeight);
-            inSimpleSize = widthRatio > heightRatio ? heightRatio : widthRatio;
+            int halfWidth = width/2;
+            int halfHeight = height/2;
+            while ((halfWidth / inSimpleSize) > reqWidth && (halfHeight / inSimpleSize) > reqHeight){
+                inSimpleSize *= 2;
+            }
         }
         return inSimpleSize;
     }
