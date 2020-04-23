@@ -16,6 +16,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -113,5 +114,22 @@ public class MainActivity extends AppCompatActivity{
             }
         }
         unbindService(serviceConnection);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN && ev.getX() <= 50){
+
+            Log.d(TAG, "dispatchTouchEvent: " + ev.getX() + " , " + ev.getY());
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.d(TAG, "onTouchEvent: " + event.getX() + " , " + event.getY());
+
+        return super.onTouchEvent(event);
     }
 }

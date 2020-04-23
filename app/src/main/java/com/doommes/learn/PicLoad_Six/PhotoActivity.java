@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
+import com.bumptech.glide.Glide;
 import com.doommes.learn.PicLoad_Six.adapter.PhotoAdapter;
 import com.doommes.learn.R;
 
